@@ -26,14 +26,14 @@ This repository aims to offer a multidimensional recurrent function, implemented
 
 As best of my knowledge this is the first publicly available repository that tries to implement this type of function in tensorflow 2. Futhermore, I was able to find ONLY one repository that tries to implement a [multidimensional-lstm](https://github.com/philipperemy/tensorflow-multi-dimensional-lstm) in tensorlflow 1.7.
 
-It is worth to mention the [RetuRNN](https://github.com/rwth-i6/returnn) framework, which offers a (GPU-only) multidimensional LSTM.
+It is worth to mention the [RetuRNN](https://github.com/rwth-i6/returnn) framework that also offers a (GPU-only) multidimensional LSTM.
 
 Here some works that used/proposed this type of recurrency for "text" and "image" taks:
 
   * [Match-SRNN: Modeling the Recursive Matching Structure with Spatial RNN](https://arxiv.org/pdf/1604.04378.pdf)
   * [DeepRank: A New Deep Architecture for Relevance Ranking in Information Retrieval](https://arxiv.org/abs/1710.05649)
   * [Modeling Diverse Relevance Patterns in Ad-hoc Retrieval](https://arxiv.org/pdf/1805.05737.pdf)
-  * [Multi-Dimensional Recurrent Neural Networks](https://arxiv.org/pdf/0705.2011.pdf)
+  * [Multi-Dimensional Recurrent Neural Networks](https://arxiv.org/pdf/0705.2011.pdf) (Probabily the first work to describe mdrnn)
   * [Handwriting Recognition with Large Multidimensional Long Short-Term MemoryRecurrent Neural Networks](https://www.vision.rwth-aachen.de/media/papers/MDLSTM_final.pdf)
 
 # How it works
@@ -46,17 +46,24 @@ The following image shows an example applied to two dimensional data, where each
 
 ![Basic MDRNN IMAGE](images/mdrnn.PNG)
 
+So each state in a mdrnn is computed by a recursive function of its previous states and input.
+
+![equation](https://latex.codecogs.com/gif.latex?%5Cvec%7Bh%7D_%7Bij%7D%3Df%28%5Cvec%7Bh%7D_%7Bi-1%2Cj%7D%2C%5Cvec%7Bh%7D_%7Bi%2Cj-1%7D%2C%20%5Cvec%7Bh%7D_%7Bi-1%2Cj-1%7D%2C%20%5Cvec%7Bs%7D_%7Bij%7D%29)
+
 ### In practice
 
-The current implementation follows a naive approach that iterates sequentially over every 2D entry (first column dimension and then row), feeding the previous computed states (left, up, diagonal).
+The current implementation follows a naive approach that iterates sequentially over every 2D entry (first column dimension and then row dimension), feeding the previous computed states (left, up, diagonal).
 
-An (GPU/CPU) optimization could be achieved by computing oposed diagonals in parellel, since each entry in a oposed diagonal are independet as presentend in the follwing image by the black lines. However, note that their still exists an sequencial dependency between the black lines, in order for the privious states are all computed.
+![Basic MDRNN 2Dto1D](images/mdrnn_to_1d.PNG)
+
+An (GPU/CPU) optimization could be achieved by computing oposed diagonals in parellel, since each entry in a oposed diagonal are independet as presentend in the follwing image by the black lines. However, note that their is an sequencial dependency between the black lines, in order for the previous states are all computed.
 
 ![GPU MDRNN IMAGE](images/mdrnn_independent.PNG)
 
 # Installation
+(Working in progress)
 
-git clone
+For now, clone the repository
 
 # Usage
 
@@ -64,6 +71,7 @@ git clone
 # normal tensorflow keras imports
 from tensorflow.keras import Sequential
 from tensorflow.keras.layers import Dense
+
 # multidimensional rnn imports
 from mdrnn import MultiDimensionalRNN
 from mdcells import MultiDimensinalGRUCell
@@ -71,8 +79,8 @@ from mdcells import MultiDimensinalGRUCell
 gru_units = 4
 
 model = Sequential()
-model.add(MultiDimensionalRNN(MultiDimensinalGRUCell(gru_units), input_shape(5,5,1)))
-model.add(Dense(4))
+model.add(MultiDimensionalRNN(MultiDimensinalGRUCell(gru_units, activation='tanh'), input_shape(5,5,1)))
+model.add(Dense(1))
 
 # normal keras model :D
 ```
@@ -85,5 +93,6 @@ model.add(Dense(4))
 
 Contributions are welcome!!
 
+* More gates (LSTM)
 * CPU/GPU improvement using the idea of oposed diagonal
 * Multidirictional recurrency
