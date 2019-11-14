@@ -3,7 +3,8 @@
 #### Note: This code is offered without any warranty and was developed as a way to learn the new version of tensorflow 2.0. Finally, any contributions are welcome
 
 ## TL; DR: What is currently implemented/working?
-  * Spatial-GRU or 2D-GRU (kinda works, need more testing)
+  * two-dimensional loop with 3 states (left, top, diagonal)
+  * Spatial-GRU or 2D-GRU (kinda works, need more testing) (article: arXiv:1604.04378)
 
 
 # Table of contents
@@ -95,5 +96,5 @@ model.add(Dense(1))
 Contributions are welcome!!
 
 * More gates (LSTM)
-* CPU/GPU improvement using the idea of oposed diagonal
+* CPU/GPU improvement using the idea of opposed diagonal
 * Multidirictional recurrency
