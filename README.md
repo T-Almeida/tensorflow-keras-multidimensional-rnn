@@ -1,6 +1,6 @@
 # Spatial-RNN-GRU or Multidimensional RNN/GRU
 
-#### Note: This code is offered without any warranty and was develop as a way to better understand the tensorflow 2.0 framework. Finally any contributions are welcome
+#### Note: This code is offered without any warranty and was developed as a way to learn the new version of tensorflow 2.0. Finally, any contributions are welcome
 
 ## TL; DR: What is currently implemented/working?
   * Spatial-GRU or 2D-GRU (kinda works, need more testing)
@@ -24,25 +24,25 @@
 
 This repository aims to offer a multidimensional recurrent function, implemented in tensorflow 2.0 with Keras API, that can be used by multiple recurrent cells (RNN/GRU/LSTM).
 
-As best of my knowledge this is the first publicly available repository that tries to implement this type of function in tensorflow 2. Futhermore, I was able to find ONLY one repository that tries to implement a [multidimensional-lstm](https://github.com/philipperemy/tensorflow-multi-dimensional-lstm) in tensorlflow 1.7.
+As best of my knowledge this is the first publicly available repository that tries to implement this type of function in tensorflow 2. Furthermore, I was able to find ONLY one repository that tries to implement a [multidimensional-lstm](https://github.com/philipperemy/tensorflow-multi-dimensional-lstm) in tensorlflow 1.7.
 
-It is worth to mention the [RetuRNN](https://github.com/rwth-i6/returnn) framework that also offers a (GPU-only) multidimensional LSTM.
+It is worth to mention the [RetuRNN](https://github.com/rwth-i6/returnn) framework, that also offers a (GPU-only) multidimensional LSTM.
 
-Here some works that used/proposed this type of recurrency for "text" and "image" taks:
+In terms of literature, these are some works that used/proposed this type of recurrency for "text" and "image" tasks:
 
   * [Match-SRNN: Modeling the Recursive Matching Structure with Spatial RNN](https://arxiv.org/pdf/1604.04378.pdf)
   * [DeepRank: A New Deep Architecture for Relevance Ranking in Information Retrieval](https://arxiv.org/abs/1710.05649)
   * [Modeling Diverse Relevance Patterns in Ad-hoc Retrieval](https://arxiv.org/pdf/1805.05737.pdf)
-  * [Multi-Dimensional Recurrent Neural Networks](https://arxiv.org/pdf/0705.2011.pdf) (Probabily the first work to describe mdrnn)
+  * [Multi-Dimensional Recurrent Neural Networks](https://arxiv.org/pdf/0705.2011.pdf) (Probably  the first work to describe mdrnn)
   * [Handwriting Recognition with Large Multidimensional Long Short-Term MemoryRecurrent Neural Networks](https://www.vision.rwth-aachen.de/media/papers/MDLSTM_final.pdf)
 
 # How it works
 
 ### In theory
 
-A multidimensional RNN is similar to an one dimensional recurrent neural network, but instead of only using one state (the output of the previous step), it uses multiples states that corresponds to the previous computed outputs in each dimension.
+A multidimensional RNN is similar to a one-dimensional recurrent neural network, but instead of using only one state (the output of the previous step), it uses multiples states, normally one per dimension.
 
-The following image shows an example applied to two dimensional data, where each entry has acess to three previous states (left in blue, top in green and diagonal in red). In some works only the left and top states are used.
+The following image shows an example applied to two-dimensional data, where each entry has access to three previous states (left in blue, top in green and diagonal in red).However, in some works, only the left and top states are used.
 
 ![Basic MDRNN IMAGE](images/mdrnn.PNG)
 
@@ -56,7 +56,8 @@ The current implementation follows a naive approach that iterates sequentially o
 
 ![Basic MDRNN 2Dto1D](images/mdrnn_to_1d.PNG)
 
-An (GPU/CPU) optimization could be achieved by computing oposed diagonals in parellel, since each entry in a oposed diagonal are independet as presentend in the follwing image by the black lines. However, note that their is an sequencial dependency between the black lines, in order for the previous states are all computed.
+
+A GPU/CPU optimization could be achieved by computing the opposed diagonals in parellel since each entry in an opposed diagonal is independent, as presented in the following image by the black lines. However, note that there still is a sequential dependency between the black lines that must be respected.
 
 ![GPU MDRNN IMAGE](images/mdrnn_independent.PNG)
 

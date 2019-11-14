@@ -2,6 +2,7 @@ import tensorflow as tf
 from tensorflow.keras import backend as K
 import numpy as np
 
+
 class MultiDimensionalRNN(tf.keras.layers.Layer):
 
     def __init__(self,
