@@ -1,4 +1,4 @@
-# Spatial-RNN-GRU or Multidimensional RNN/GRU
+# Multidimensional Recurrent Neural Networks
 
 #### Note: This code is offered without any warranty and was developed as a way to learn the new version of tensorflow 2.0. Finally, any contributions are welcome
 
