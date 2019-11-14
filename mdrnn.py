@@ -1,6 +1,6 @@
 import tensorflow as tf
 from tensorflow.keras import backend as K
-
+import numpy as np
 
 class MultiDimensionalRNN(tf.keras.layers.Layer):
 
@@ -12,6 +12,8 @@ class MultiDimensionalRNN(tf.keras.layers.Layer):
         # outter layer keep track of the inner layer
         self.cell = cell
         self.inital_state = inital_state
+        if not type(self.inital_state) is np.ndarray:
+            self.inital_state = np.array([self.inital_state], dtype=np.float32)
 
         super().__init__(**kwargs)
 
@@ -30,7 +32,7 @@ class MultiDimensionalRNN(tf.keras.layers.Layer):
     def dynamic_tf_loop(self, input_data):
 
         input_shape = K.shape(input_data)
-        print("[DYNAMIC LOOP] input shape", input_shape)
+        #print("[DYNAMIC LOOP] input shape", input_shape)
 
         if self.inital_state is None:
             initial_state = tf.zeros((input_shape[1], self.cell.state_size))  # default state
@@ -72,7 +74,7 @@ class MultiDimensionalRNN(tf.keras.layers.Layer):
         states = tf.TensorArray(dtype=tf.float32, size=self.rows*self.columns, clear_after_read=False)
 
         # sequential loop -> recursive loop
-        print("Loop Iterations", self.rows*self.columns)
+        #print("Loop Iterations", self.rows*self.columns)
         for i in tf.range(self.rows*self.columns):
 
             states = states.write(i,
@@ -98,4 +100,4 @@ class MultiDimensionalRNN(tf.keras.layers.Layer):
         return tf.reshape(states[-1], self.compute_output_shape(input_shape))
 
     def compute_output_shape(self, input_shape):
-        return (input_shape[0], self.cell.state_size)
+        return (input_shape[0], self.inital_state.shape[0])
