@@ -78,14 +78,16 @@ from tensorflow.keras import Sequential
 from tensorflow.keras.layers import Dense
 
 # multidimensional rnn imports
-from mdrnn import MultiDimensionalRNN
-from mdcells import MultiDimensinalGRUCell
+from tfmd.mdrnn import MultiDimensionalRNN
+from tfmd.mdcells import MultiDimensinalGRUCell
 
 gru_units = 4
 
 model = Sequential()
 model.add(MultiDimensionalRNN(MultiDimensinalGRUCell(gru_units, activation='tanh'), input_shape=(5,5,1)))
 model.add(Dense(1))
+
+model.summary()
 
 # normal keras model :D
 ```
