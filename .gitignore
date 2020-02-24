@@ -4,7 +4,8 @@ logs
 __pycache__/
 *.py[cod]
 *$py.class
-
+dist
+tfmd.egg-info
 # C extensions
 *.so
 

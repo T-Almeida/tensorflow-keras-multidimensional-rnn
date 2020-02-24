@@ -65,7 +65,11 @@ A GPU/CPU optimization could be achieved by computing the opposed diagonals in p
 # Installation
 (Working in progress)
 
-For now, clone the repository
+1) For now, clone the repository
+
+(optinal install as a python package)
+2) python setup.py sdist
+3) pip install dist/tfmd-0.0.1.tar.gz
 
 # Usage
 
@@ -81,7 +85,7 @@ from mdcells import MultiDimensinalGRUCell
 gru_units = 4
 
 model = Sequential()
-model.add(MultiDimensionalRNN(MultiDimensinalGRUCell(gru_units, activation='tanh'), input_shape(5,5,1)))
+model.add(MultiDimensionalRNN(MultiDimensinalGRUCell(gru_units, activation='tanh'), input_shape=(5,5,1)))
 model.add(Dense(1))
 
 # normal keras model :D
