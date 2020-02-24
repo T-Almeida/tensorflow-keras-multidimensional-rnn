@@ -66,7 +66,7 @@ A GPU/CPU optimization could be achieved by computing the opposed diagonals in p
 (Working in progress)
 
 1. For now, clone the repository
-*(optinal install as a python package)
+* (optinal install as a python package)
 2. python setup.py sdist
 3. pip install dist/tfmd-0.0.1.tar.gz
 
